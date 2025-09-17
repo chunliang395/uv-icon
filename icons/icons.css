@@ -1,29 +1,28 @@
-/* 行容器：頂對齊 + 穩定間距 */
+/* 列：左欄固定給 icon，右欄放文字；多行時不跑位 */
 .meta-item{
-  display: flex;
-  align-items: flex-start;   /* ← 改成頂對齊 */
-  gap: 0.8rem;               /* 圖示與文字距離 */
-  line-height: 1.8;          /* 和下方 <p> 接近 */
-  margin: 0 0 0.8rem;
-  font-size: 1.6rem;         /* 文字大小統一 */
+  display: grid;
+  grid-template-columns: 1.8rem 1fr;  /* ← 左欄固定寬；想大一點改 2.0rem */
+  column-gap: .8rem;                  /* icon 與文字距離 */
+  line-height: 1.8;
+  margin: 0 0 .8rem;
+  font-size: 1.6rem;
 }
 
-/* 圖示本體：固定尺寸 + 輕微下推，對齊第一行字高 */
+/* icon：固定尺寸，對齊第一行（微往下壓一點較自然） */
 .meta-item::before{
   content:"";
-  width: 2.0rem;             /* ← 圖示更大（可改 1.5~1.8rem） */
+  width: 2.0rem;                      /* ← icon 大小；想更大改 1.8rem */
   height: 2.0rem;
-  flex: 0 0 1.6rem;          /* 固定欄寬，左列對齊 */
-  margin-top: 0.15em;        /* ← 微調，讓圖示貼齊第一行 */
+  align-self: start;                   /* 關鍵：跟第一行對齊頂部 */
+  margin-top: .18em;                   /* 微調到貼近第一行中線；覺得高/低就 ±0.05em */
   background-color: currentColor;
   -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat;
           mask-size: contain;         mask-repeat: no-repeat;
 }
 
-/* 手機再微調（可選） */
-@media (max-width: 480px){
-  .meta-item{ gap: 0.7rem; margin-bottom: 0.7rem; }
-  .meta-item::before{ width: 1.5rem; height: 1.5rem; margin-top: 0.12em; }
+@media (max-width:480px){
+  .meta-item{ grid-template-columns: 1.8rem 1fr; column-gap:.7rem; margin-bottom:.7rem; }
+  .meta-item::before{ width:1.6rem; height:1.6rem; margin-top:.16em; }
 }
 
 /* 你的五顆圖示 */
@@ -37,3 +36,4 @@
 .meta-item.preorder{ color:#eb6b56; font-weight:700; }
 /* 讓這一組的字跟下面 <p> 一樣大 */
 .meta-item { font-size: 1.6rem; }
+.meta-item.release{ color:#2a7fff; } /* 之後換成你最終的藍 */
