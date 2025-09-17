@@ -27,3 +27,5 @@
 
 /* 可選：預購色 */
 .meta-item.preorder{ color:#eb6b56; font-weight:700; }
+/* 讓這一組的字跟下面 <p> 一樣大 */
+.meta-item { font-size: 1.6rem; }
