@@ -1,29 +1,46 @@
-/* 列：左欄固定給 icon，右欄放文字；多行時不跑位 */
+/* —— 對齊與尺寸（用 Grid 穩定兩欄）—— */
+:root{
+  --uv-icon-size: 1.6rem;   /* 圖示大小：想再大就調 1.7~1.9rem */
+  --uv-icon-col:  2.0rem;   /* 左欄寬：要比上面大一點，留出邊界 */
+  --uv-icon-gap:  0.8rem;   /* 圖示與文字間距 */
+  --uv-icon-offset: .34em;  /* 圖示向下微移，貼齊第一行 */
+}
+
 .meta-item{
   display: grid;
-  grid-template-columns: 1.8rem 1fr;  /* ← 左欄固定寬；想大一點改 2.0rem */
-  column-gap: .8rem;                  /* icon 與文字距離 */
+  grid-template-columns: var(--uv-icon-col) 1fr; /* 左固定、右自動 */
+  column-gap: var(--uv-icon-gap);
+  align-items: start;          /* 多行時以第一行為準 */
   line-height: 1.8;
   margin: 0 0 .8rem;
   font-size: 1.6rem;
 }
 
-/* icon：固定尺寸，對齊第一行（微往下壓一點較自然） */
 .meta-item::before{
   content:"";
-  width: 2.0rem;                      /* ← icon 大小；想更大改 1.8rem */
-  height: 2.0rem;
-  align-self: start;                   /* 關鍵：跟第一行對齊頂部 */
-  margin-top: .18em;                   /* 微調到貼近第一行中線；覺得高/低就 ±0.05em */
-  background-color: currentColor;
+  width:  var(--uv-icon-size);
+  height: var(--uv-icon-size);
+  align-self: start;           /* 關鍵：對齊第一行頂部 */
+  margin-top: var(--uv-icon-offset); /* 微調到第一行視覺中線 */
+  background-color: #fff;      /* 圖示固定白色 */
   -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat;
           mask-size: contain;         mask-repeat: no-repeat;
 }
 
+/* 手機微調（需要再緊一點就調這裡的 3 個變數） */
 @media (max-width:480px){
-  .meta-item{ grid-template-columns: 1.8rem 1fr; column-gap:.7rem; margin-bottom:.7rem; }
-  .meta-item::before{ width:1.6rem; height:1.6rem; margin-top:.16em; }
+  :root{
+    --uv-icon-size: 1.6rem;
+    --uv-icon-col:  1.9rem;
+    --uv-icon-gap:  0.7rem;
+    --uv-icon-offset: .36em;   /* 若看起來偏高→數值再加一點 */
+  }
 }
+
+/* —— 顏色規則 —— */
+/* 只讓「文字」變藍，圖示維持白色 */
+.meta-item.release{ color:#2a7fff; }
+.meta-item.release::before{ background-color:#fff; }  /* 保白色 */
 
 /* 你的五顆圖示 */
 .meta-item.category::before { -webkit-mask-image:url(/icons/ic-category.svg); mask-image:url(/icons/ic-category.svg); }
