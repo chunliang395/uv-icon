@@ -1,13 +1,18 @@
-/* 讓每行前面出現小圖示 */
+/* 讓每行用 flex 排版，圖示置中、間距一致 */
 .meta-item{
-  position: relative;
-  padding-left: 1.8rem;
-  line-height: 1.7;
+  display: flex;
+  align-items: center;     /* 垂直置中 */
+  gap: 0.6rem;             /* 圖示與文字的間距 */
+  line-height: 1.8;        /* 跟下方原生 <p> 接近 */
+  margin: 0 0 0.6rem;      /* 每行的下間距 */
 }
+
+/* 圖示改成 inline 區塊，不用絕對定位 */
 .meta-item::before{
-  content:"";
-  position:absolute; left:0; top:0.25em;
-  width:1.2rem; height:1.2rem;
+  content: "";
+  width: 1.2rem;
+  height: 1.2rem;
+  flex: 0 0 1.2rem;        /* 圖示固定寬度，不會被擠 */
   background-color: currentColor;
   -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat;
           mask-size: contain;         mask-repeat: no-repeat;
