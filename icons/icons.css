@@ -1,46 +1,45 @@
-/* —— 對齊與尺寸（用 Grid 穩定兩欄）—— */
+/* —— 對齊與尺寸（計算式版本）—— */
 :root{
-  --uv-icon-size: 1.6rem;   /* 圖示大小：想再大就調 1.7~1.9rem */
-  --uv-icon-col:  2.0rem;   /* 左欄寬：要比上面大一點，留出邊界 */
-  --uv-icon-gap:  0.8rem;   /* 圖示與文字間距 */
-  --uv-icon-offset: .34em;  /* 圖示向下微移，貼齊第一行 */
+  --uv-line: 1.8;          /* 第一行的 line-height（em 單位） */
+  --uv-icon-em: 1.05;      /* 圖示大小 = 1.05em（可調 1.0~1.2） */
+  --uv-col-em:  1.9;       /* 左欄寬度（要略大於圖示） */
+  --uv-nudge:   .12em;     /* 微調：覺得偏高→加大；偏低→減少 */
 }
 
 .meta-item{
   display: grid;
-  grid-template-columns: var(--uv-icon-col) 1fr; /* 左固定、右自動 */
-  column-gap: var(--uv-icon-gap);
-  align-items: start;          /* 多行時以第一行為準 */
-  line-height: 1.8;
+  grid-template-columns: calc(var(--uv-col-em)*1em) 1fr;
+  column-gap: .8rem;
+  line-height: var(--uv-line);
   margin: 0 0 .8rem;
   font-size: 1.6rem;
+  align-items: start;
 }
 
 .meta-item::before{
   content:"";
-  width:  var(--uv-icon-size);
-  height: var(--uv-icon-size);
-  align-self: start;           /* 關鍵：對齊第一行頂部 */
-  margin-top: var(--uv-icon-offset); /* 微調到第一行視覺中線 */
-  background-color: #fff;      /* 圖示固定白色 */
+  width:  calc(var(--uv-icon-em)*1em);
+  height: calc(var(--uv-icon-em)*1em);
+  /* 將圖示置於「第一行行框」的正中線，再加微調 */
+  margin-top: calc(((var(--uv-line) - var(--uv-icon-em)) * 0.5) * 1em + var(--uv-nudge));
+  align-self: start;
+  background-color: #fff;   /* 圖示固定白色，不跟字色走 */
   -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat;
           mask-size: contain;         mask-repeat: no-repeat;
 }
 
-/* 手機微調（需要再緊一點就調這裡的 3 個變數） */
 @media (max-width:480px){
   :root{
-    --uv-icon-size: 1.6rem;
-    --uv-icon-col:  1.9rem;
-    --uv-icon-gap:  0.7rem;
-    --uv-icon-offset: .36em;   /* 若看起來偏高→數值再加一點 */
+    --uv-line: 1.85;
+    --uv-icon-em: 1.08;
+    --uv-col-em:  2.0;
+    --uv-nudge:   .14em;   /* 手機通常需要再往下貼一點 */
   }
 }
 
-/* —— 顏色規則 —— */
-/* 只讓「文字」變藍，圖示維持白色 */
+/* 只讓日期文字變色，圖示維持白色 */
 .meta-item.release{ color:#2a7fff; }
-.meta-item.release::before{ background-color:#fff; }  /* 保白色 */
+.meta-item.release::before{ background-color:#fff; }
 
 /* 你的五顆圖示 */
 .meta-item.category::before { -webkit-mask-image:url(/icons/ic-category.svg); mask-image:url(/icons/ic-category.svg); }
