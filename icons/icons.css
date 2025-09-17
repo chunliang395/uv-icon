@@ -11,8 +11,8 @@
 /* 圖示本體：固定尺寸 + 輕微下推，對齊第一行字高 */
 .meta-item::before{
   content:"";
-  width: 1.6rem;             /* ← 圖示更大（可改 1.5~1.8rem） */
-  height: 1.6rem;
+  width: 1.8rem;             /* ← 圖示更大（可改 1.5~1.8rem） */
+  height: 1.8rem;
   flex: 0 0 1.6rem;          /* 固定欄寬，左列對齊 */
   margin-top: 0.15em;        /* ← 微調，讓圖示貼齊第一行 */
   background-color: currentColor;
