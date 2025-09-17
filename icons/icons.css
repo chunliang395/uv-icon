@@ -1,21 +1,29 @@
-/* 讓每行用 flex 排版，圖示置中、間距一致 */
+/* 行容器：頂對齊 + 穩定間距 */
 .meta-item{
   display: flex;
-  align-items: center;     /* 垂直置中 */
-  gap: 0.6rem;             /* 圖示與文字的間距 */
-  line-height: 1.8;        /* 跟下方原生 <p> 接近 */
-  margin: 0 0 0.6rem;      /* 每行的下間距 */
+  align-items: flex-start;   /* ← 改成頂對齊 */
+  gap: 0.8rem;               /* 圖示與文字距離 */
+  line-height: 1.8;          /* 和下方 <p> 接近 */
+  margin: 0 0 0.8rem;
+  font-size: 1.6rem;         /* 文字大小統一 */
 }
 
-/* 圖示改成 inline 區塊，不用絕對定位 */
+/* 圖示本體：固定尺寸 + 輕微下推，對齊第一行字高 */
 .meta-item::before{
-  content: "";
-  width: 1.2rem;
-  height: 1.2rem;
-  flex: 0 0 1.2rem;        /* 圖示固定寬度，不會被擠 */
+  content:"";
+  width: 1.6rem;             /* ← 圖示更大（可改 1.5~1.8rem） */
+  height: 1.6rem;
+  flex: 0 0 1.6rem;          /* 固定欄寬，左列對齊 */
+  margin-top: 0.15em;        /* ← 微調，讓圖示貼齊第一行 */
   background-color: currentColor;
   -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat;
           mask-size: contain;         mask-repeat: no-repeat;
+}
+
+/* 手機再微調（可選） */
+@media (max-width: 480px){
+  .meta-item{ gap: 0.7rem; margin-bottom: 0.7rem; }
+  .meta-item::before{ width: 1.5rem; height: 1.5rem; margin-top: 0.12em; }
 }
 
 /* 你的五顆圖示 */
